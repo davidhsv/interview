@@ -40,26 +40,26 @@ public class CachedStorageConcurrentHashMap implements IStorage {
     // we want to ensure that only one thread will reach the slow storage
 
     // also, get is thread safe and doesn't use locks in ConcurrentHashMap
-    String cachedValue = cache.get(key);
-    if (cachedValue != null) {
-      return cachedValue;
-    } else {
-      String result = cache.computeIfAbsent(key, k -> {
-        currentSize.incrementAndGet();
-        synchronized (storage) {
-          return storage.get(key);
-        }
-      });
+    synchronized (cache) {
+      String cachedValue = cache.get(key);
+      if (cachedValue != null) {
+        return cachedValue;
+      } else {
+        String result = cache.computeIfAbsent(key, k -> {
+          currentSize.incrementAndGet();
+          synchronized (storage) {
+            return storage.get(key);
+          }
+        });
 
-      // if the cache is full, we need to remove one random entry
-      synchronized (currentSize) {
+        // if the cache is full, we need to remove one random entry
         if (currentSize.get() > maxSize) {
           currentSize.decrementAndGet();
           cache.remove(cache.keySet().stream().filter(k -> !k.equals(key)).findFirst().get());
         }
-      }
 
-      return result;
+        return result;
+      }
     }
 
   }

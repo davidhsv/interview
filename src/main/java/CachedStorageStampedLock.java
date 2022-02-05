@@ -49,6 +49,7 @@ public class CachedStorageStampedLock implements IStorage {
     try {
       cachedValue = cache.get(key);
       if (cachedValue != null) {
+        // 2nd best scenario - cached but with locking
         return cachedValue;
       } else {
         long writeCacheStamp = cacheStampedLock.tryConvertToWriteLock(cacheStamp);

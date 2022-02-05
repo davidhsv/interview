@@ -1,7 +1,7 @@
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class CachedStorageStampedLockTest {
+public class CachedStoragesTest {
   private static final boolean SIMULATE_STORAGE_DELAY = false;
   private static final int CACHE_SIZE = 100;
   private static final int RUNS = 5;
