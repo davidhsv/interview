@@ -15,8 +15,8 @@ public class CachedStoragesTest {
         new FakeRedisStorage(SIMULATE_STORAGE_DELAY), CACHE_SIZE);
 
     runTestForClass(stampedLock);
-    runTestForClass(concurrentHashMap);
-    runTestForClass(synchronizedMap);
+//    runTestForClass(concurrentHashMap);
+//    runTestForClass(synchronizedMap);
   }
 
   private static void runTestForClass(IStorage storageToTest) {

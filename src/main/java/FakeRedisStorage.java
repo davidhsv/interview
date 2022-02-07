@@ -27,7 +27,7 @@ public class FakeRedisStorage implements IStorage {
         Thread.sleep(5);
       } catch (InterruptedException e) {}
     }
-    return "fake-" + System.nanoTime();
+    return "fake-" + key;
   }
 
 }
